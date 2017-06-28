@@ -17,7 +17,7 @@
           <div v-for="keep in keeps" class='col-sm-3 well'>
             <h3>{{keep.title}}</h3>
             <img :src="keep.imgUrl" class="keepImage"/><br>
-            
+
             </div>
         </div>
       </div>
@@ -26,7 +26,6 @@
 </template>
 
 <script>
-  import Keep from '@/components/Keep'
   export default {
     name: 'homepage',
     data() {
@@ -37,10 +36,12 @@
     computed: {
       keeps() {
         return this.$store.state.keeps
+      },
+      user() {
+        return this.$store.state.user
       }
     },
     components: {
-      Keep
     }
   }
 

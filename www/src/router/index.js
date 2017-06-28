@@ -4,6 +4,7 @@ import Homepage from '@/components/Homepage'
 import Keep from '@/components/Keep'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
+import MyKeeps from '@/components/MyKeeps'
 
 Vue.use(Router)
 
@@ -15,7 +16,7 @@ export default new Router({
       component: Homepage
     },
     {
-      path: '/keeps',
+      path: '/keep',
       name: 'Keep',
       component: Keep
     },
@@ -28,6 +29,11 @@ export default new Router({
       path: '/register',
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/mykeeps/:id',
+      name: 'MyKeeps',
+      component: MyKeeps
     }
   ]
 })

@@ -16,6 +16,7 @@ const models = {
   keep: {
     name: 'Keep',
     endpoint: 'keep',
+    useCustomRoutes: true
   },
   vault: {
     name: 'Vault',

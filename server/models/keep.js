@@ -12,7 +12,8 @@ var schema = new mongoose.Schema({
   keepCount: { type: Number, default: 0},
   shareCount: { type: Number, default: 0},
   viewCount: { type: Number, default: 0},
-  author: { type: String, default: ''}
+  author: { type: String, default: ''},
+  public: {type: Boolean, default: true}
 });
 
 module.exports = mongoose.model(models.keep.name, schema);
