@@ -6,6 +6,7 @@ import Login from '@/components/Login'
 import Register from '@/components/Register'
 import MyKeeps from '@/components/MyKeeps'
 
+
 Vue.use(Router)
 
 export default new Router({
@@ -18,7 +19,7 @@ export default new Router({
     {
       path: '/keep',
       name: 'Keep',
-      component: Keep
+      component: Keep,
     },
     {
       path: '/login',

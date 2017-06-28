@@ -19,9 +19,7 @@ let auth = axios.create({
 // REGISTER ALL DATA HERE
 let state = {
   user: {},
-  myVaults: {},
-  myKeeps: {},
-  //Dummy Data
+  vaults: [],
   keeps: [],
   error: {}
 }
@@ -47,8 +45,12 @@ export default new Vuex.Store({
       state.error = {}
     },
     setKeeps(state, keeps) { 
-      debugger
+      //debugger
       state.keeps = keeps;
+    },
+    setVaults(state, vaults) { 
+      debugger
+      state.vaults = vaults;
     }
 
   },
@@ -91,16 +93,32 @@ export default new Vuex.Store({
     },
     createKeep({ commit, dispatch }, keep){
       api.post('keep', keep).then(res => {
-          commit()
+          dispatch('getKeeps', keep.createdBy)
+        })
+        .catch(handleError)
+    },
+    createVault({ commit, dispatch }, vault){
+      api.post('vault', vault).then(res => { 
+        debugger
+          dispatch('getVaults', vault.creatorId)
         })
         .catch(handleError)
     },
     getKeeps({ commit, dispatch }, userId ){
+      //debugger
+      api('getKeeps/' + userId)
+      .then(res => {
+        //debugger
+          commit('setKeeps', res.data.data)
+        })
+        .catch(handleError)
+    },
+    getVaults({ commit, dispatch }, userId ){
       debugger
-      api('getKeeps', userId)
+      api('getVaults/' + userId)
       .then(res => {
         debugger
-          commit('setKeeps', res.data.data)
+          commit('setVaults', res.data.data)
         })
         .catch(handleError)
     },

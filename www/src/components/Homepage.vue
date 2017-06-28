@@ -16,9 +16,9 @@
         <div class='row'>
           <div v-for="keep in keeps" class='col-sm-3 well'>
             <h3>{{keep.title}}</h3>
-            <img :src="keep.imgUrl" class="keepImage"/><br>
+            <img :src="keep.imgUrl" class="keepImage" /><br>
 
-            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -67,7 +67,8 @@
   a {
     color: #42b983;
   }
-  .keepImage{
+
+  .keepImage {
     height: 275px;
     width: auto;
   }

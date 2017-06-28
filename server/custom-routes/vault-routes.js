@@ -1,15 +1,17 @@
 let Keep = require('../models/keep')
+let Vault = require('../models/vault')
 
 export default {
-  keepsByUserId: {
-    path: '/getKeeps/:userId',
+  vaultsByUserId: {
+    path: '/getVaults/:userId',
     reqType: 'get',
     method(req, res, next) {
       //debugger
-      let action = 'Get Keeps by UserId'
-      Keep.find({ creatorId: req.params.userId })
-        .then(keeps => {
-          res.send(handleResponse(action, keeps))
+      let action = 'Get Vaults by UserId'
+      Vault.find({ creatorId: req.params.userId })
+        .then(vaults => {
+          //debugger
+          res.send(handleResponse(action, vaults))
         }).catch(error => {
           return next(handleResponse(action, null, error))
         })

@@ -1,24 +1,53 @@
 <template>
-  <div class="myKeeps"><hr>
-    <button type="button" class='btn btn-primary' @click="keepFormToggle" v-show="addKeepButton">Create a Keep</button>
-            <form class="form-inline keep-form" @submit.prevent="createKeep" v-show="newKeep">
-                <div class="form-group">
-                    <input type="text" class="form-control" v-model="keep.title" placeholder="Keep Title" /><br>
-                    <input type="text" class="form-control form-body" v-model="keep.body" placeholder="Body" /><br>
-                    <input type="url" class="form-control" v-model="keep.imgUrl" placeholder="www.yourpic.com" /><br>
-                    <button type="submit" class="btn btn-primary" @click="keepFormToggleBack">Add Your Keep</button>
-                </div>
-            </form><hr>
+  <div class="body">
+    <div class="myKeeps well">
+      <div class="nav container-fluid">
+        <div class="row">
+          <div class="col-xs-4">
+            <!--<span class="glyphicon glyphicon-search form-control-feedback"></span>-->
+            <input type="search" class="form-control search" placeholder="search Keeps" />
+          </div>
+          <div class="col-xs-1">
+            <p>-</p>
+          </div>
+          <div class="col-xs-2">
+            <a>Browse Keeps</a>
+          </div>
+          <div class="col-xs-1">
+            <p>-</p>
+          </div>
+          <div class="col-xs-2">
+            <a @click="keepFormToggle">+ New Keep</a>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <hr>
+      <div class="keeps">
+        <div class="container">
+          <div class='row'>
+            <div v-for="keep in keeps" class='col-sm-3 keep'>
+              <h3>{{keep.title}}</h3>
+              <img :src="keep.imgUrl" class="keepImage" /><br>
 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <Vaults></Vaults>
+    <KeepForm v-show="keepForm"></KeepForm>
   </div>
 </template>
 
 
 <script>
-export default {
-  name: 'myKeeps',
-  data() {
-    return {
+  import Vaults from '@/components/Vaults'
+  import KeepForm from '@/components/KeepForm'
+  export default {
+    name: 'myKeeps',
+    data() {
+      return {
         keep: {
           title: '',
           body: '',
@@ -27,52 +56,93 @@ export default {
           author: '',
 
         },
-        addKeepButton: true,
-        newKeep: false
+        keepForm: false
       }
-  },
-  mounted() {
+    },
+    mounted() {
       this.$store.dispatch('getKeeps', this.$route.params.id)
     },
-  computed:{
-    user(){
-      return  this.$store.state.user
-    }
-  },
-  methods:{
-    createKeep(){
-      debugger
-      this.keep.creatorId = this.$store.state.user._id;
-      this.keep.author = this.$store.state.user.name;
-      this.$store.dispatch('createKeep', this.keep)
-
+    computed: {
+      user() {
+        return this.$store.state.user
+      },
+      keeps() {
+        return this.$store.state.keeps
+      }
     },
-    keepFormToggle() {
-            this.newKeep = true;
-            this.addKeepButton = false;
-        },
-    keepFormToggleBack() {
-        this.newKeep = false;
-        this.addKeepButton = true;
-    }
-  },
-  components:{}
-}
+    methods: {
+      createKeep() {
+        this.keep.creatorId = this.$store.state.user._id;
+        this.keep.author = this.$store.state.user.name;
+        this.$store.dispatch('createKeep', this.keep)
+
+      },
+      keepFormToggle() {
+        this.keepForm = true;
+      },
+      keepFormToggleBack() {
+        this.keepForm = false;
+      }
+    },
+    components: { Vaults, KeepForm }
+  }
+
 </script>
 
 
 <style scoped>
-.form-body{
-  height: 150px;
-},
-.form-group{
-  padding: 10px;
-},
-.form-control{
-  width: 77%;
-  margin-left: 8%;
-}
-.btn-primary{
-  width: 20%
-}
+  h1,
+  h2 {
+    font-weight: normal;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
+
+  a {
+    color: #42b983;
+  }
+
+  .keepImage {
+    height: 220px;
+    width: 150px;
+  }
+
+  .form-body {
+    height: 150px;
+  }
+
+  .form-group {
+    padding: 10px;
+  }
+
+  .form-control {
+    width: 200%;
+    margin-left: -50%;
+  }
+
+  .myKeeps {
+    width: 85%;
+    margin-left: 15%;
+  }
+
+  .well {
+    background-color: #404144;
+  }
+
+  .keep {
+    padding: 0px;
+  }
+
+  .search {
+    width: 80%;
+    margin-left: 5px;
+  }
 </style>
