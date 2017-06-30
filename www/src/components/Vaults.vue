@@ -9,9 +9,10 @@
         <button type="button" class="btn btn-default btn-xs" @click="vaultFormToggleBack">Cancel</button>
       </div>
     </form>
+    <h2><a @click="getMyKeeps">My Keeps</a></h2>
     <hr>
     <div v-for="vault in vaults" class='vault-name'>
-      <a href="#" class="vault-anchor">{{vault.name}}</a><hr>
+      <a @click="showVaultKeeps(vault)" class="vault-anchor">{{vault.name}}</a><hr>
       </div>
   </div>
 </template>
@@ -50,6 +51,13 @@ export default {
       },
       vaultFormToggleBack(){
         this.vaultForm = false;
+      },
+      showVaultKeeps(vault){
+        debugger
+        this.$store.dispatch('showVaultKeeps', vault)
+      },
+      getMyKeeps(){
+        this.$store.dispatch("getMyKeeps", this.$route.params.id)
       }
   },
   components:{}
@@ -61,9 +69,11 @@ export default {
 .vaults{
   text-align: left;
   width: 15%;
-  margin-top: -38%;
+  height: 400px;
+  margin-top: -42%;
   background-color: #787a66;
-  position: relative;
+  overflow: auto;
+  position: absolute;
 }
 .vault-anchor{
   font-size: 25px;

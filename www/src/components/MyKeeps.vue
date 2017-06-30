@@ -23,13 +23,35 @@
       </div>
       <hr>
       <hr>
+      <h1>{{activeVault.name}}</h1>
+      <hr class="keep-line">
       <div class="keeps">
         <div class="container">
           <div class='row'>
             <div v-for="keep in keeps" class='col-sm-3 keep'>
               <h3>{{keep.title}}</h3>
+              <p>By: {{keep.author}}</p>
               <img :src="keep.imgUrl" class="keepImage" /><br>
-
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-xs-2">
+                    <button type="button" class="btn btn-default btn-xs">+ Save</button>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="dropdown">
+                      <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Add To Vault 
+                      <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li v-for= "vault in vaults"><a @click="addToVault(keep, vault._id)">{{vault.name}}</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-xs-1">
+                    <button v-if="activeVault.name != 'My Keeps'" type="button" class="btn btn-default btn-xs">-</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -54,6 +76,7 @@
           imgUrl: '',
           creatorId: '',
           author: '',
+          keptBy: []
 
         },
         keepForm: false
@@ -68,10 +91,18 @@
       },
       keeps() {
         return this.$store.state.keeps
+      },
+      vaults() {
+        return this.$store.state.vaults
+      },
+      activeVault() {
+        return this.$store.state.activeVault
       }
     },
     methods: {
       createKeep() {
+        debugger
+        this.keep.keptBy.push(this.$store.state.user._id)
         this.keep.creatorId = this.$store.state.user._id;
         this.keep.author = this.$store.state.user.name;
         this.$store.dispatch('createKeep', this.keep)
@@ -82,7 +113,14 @@
       },
       keepFormToggleBack() {
         this.keepForm = false;
-      }
+      },
+      addToVault(keep, vaultId) {
+        debugger
+        keep.vaultIds.push(vaultId)
+        keep.keepCount += 1
+        this.$store.dispatch('addVaultIdToKeep', {keep: keep, vaultId: vaultId})
+        this.$store.dispatch('addToVault', {keep: keep, vaultId: vaultId} )
+      },
     },
     components: { Vaults, KeepForm }
   }
@@ -130,7 +168,12 @@
 
   .myKeeps {
     width: 85%;
+    height: 100%;
     margin-left: 15%;
+    background-color: #161615;
+  }
+  .body {
+    background-color: #161615;
   }
 
   .well {
@@ -144,5 +187,9 @@
   .search {
     width: 80%;
     margin-left: 5px;
+  }
+
+  .keep-line {
+    width: 25%;
   }
 </style>

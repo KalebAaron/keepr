@@ -6,6 +6,11 @@
         <input type="text" class="form-control" v-model="keep.title" placeholder="Keep Title" /><br>
         <input type="text" class="form-control form-body" v-model="keep.body" placeholder="Body" /><br>
         <input type="url" class="form-control" v-model="keep.imgUrl" placeholder="www.yourpic.com" /><br>
+        <label class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" v-model="keep.public">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Is this Keep Public? </span>
+            </label><br>
         <button type="submit" class="btn btn-primary" @click="keepFormToggleBack">Add Your Keep</button>
         <button type="button" class="btn btn-primary" @click="keepFormToggleBack">Cancel</button>
       </div>
@@ -26,6 +31,7 @@
           imgUrl: '',
           creatorId: '',
           author: '',
+          public: ''
         },
         keepForm: true
       }
@@ -61,11 +67,13 @@
     top: 40%;
     left: 30%
   }
-  .form-control{
+
+  .form-control {
     width: 150%;
     margin-left: -20%;
   }
-  .form-body{
+
+  .form-body {
     height: 200px;
   }
 </style>

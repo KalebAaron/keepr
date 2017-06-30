@@ -33,6 +33,8 @@ export default {
   margin-top: 0px;
   margin-bottom: 0px;
   background-color: #161615;
+  height: 100%;
+  width: 100%;
 }
 .user-name{
   text-align: right;

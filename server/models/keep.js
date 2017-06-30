@@ -8,10 +8,11 @@ var schema = new mongoose.Schema({
   imgUrl: {type: String},
   created: { type: Number, default: Date.now() },
   creatorId: {type: ObjectId, ref: models.user.name},
-  vaultId: { type: String, default: "" },
+  vaultIds: { type: Array, default: [] },
   keepCount: { type: Number, default: 0},
   shareCount: { type: Number, default: 0},
   viewCount: { type: Number, default: 0},
+  keptBy: { type: Array, default: [] },
   author: { type: String, default: ''},
   public: {type: Boolean, default: true}
 });
