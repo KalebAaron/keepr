@@ -40,6 +40,29 @@ export default {
     }
   },
 
+  incrementPoints: {
+    path: '/incrementpoints/:keepId',
+    reqType: 'put',
+    method(req, res, next) {
+      //debugger
+      let action = 'increment keep points'
+      Keep.findById(req.params.keepId).then(keep => {
+        //debugger
+        if (!vault) {
+          res.sendStatus(404)({ error: "Vault Not Found" })
+        } else {
+          keep.keepCount += 1;
+          keep.save().then(() => {
+            res.send(handleResponse(action, keep))
+          })
+            .catch(error => {
+              return next(handleResponse(action, null, error))
+            })
+        }
+      })
+    }
+  },
+
   getVaultKeeps: {
     path: '/getVaultKeeps/:vaultId',
     reqType: 'get',
