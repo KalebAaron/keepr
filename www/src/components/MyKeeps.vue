@@ -38,7 +38,7 @@
                     <button type="button" class="btn btn-default btn-xs">+ Save</button>
                   </div>
                   <div class="col-sm-4">
-                    <div class="dropdown">
+                    <div v-if="activeVault.name == 'My Keeps'"  class="addToVaultButton">
                       <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Add To Vault 
                       <span class="caret"></span>
                       </button>
@@ -46,10 +46,11 @@
                         <li v-for= "vault in vaults"><a @click="addToVault(keep, vault._id)">{{vault.name}}</a></li>
                       </ul>
                     </div>
+                    <div v-else>
+                    <button type="button" class="btn btn-default btn-xs">Remove from Vault</button>
                   </div>
-                  <div class="col-xs-1">
-                    <button v-if="activeVault.name != 'My Keeps'" type="button" class="btn btn-default btn-xs">-</button>
                   </div>
+                  
                 </div>
               </div>
             </div>
